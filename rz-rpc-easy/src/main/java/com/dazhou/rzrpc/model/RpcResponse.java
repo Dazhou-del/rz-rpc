@@ -21,7 +21,7 @@ public class RpcResponse {
     private Object data;
 
     /**
-     * 响应参数类型
+     * 响应数据类型（预留）
      */
     private Class<?> dataType;
 
