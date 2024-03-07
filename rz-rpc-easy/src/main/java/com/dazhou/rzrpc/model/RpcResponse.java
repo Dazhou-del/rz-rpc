@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-07 14:29
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RpcResponse {
+public class RpcResponse implements Serializable {
 
     /**
      * 响应参数

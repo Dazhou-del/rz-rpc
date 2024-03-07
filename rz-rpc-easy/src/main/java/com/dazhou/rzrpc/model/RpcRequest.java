@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * RPC请求
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RpcRequest {
+public class RpcRequest implements Serializable {
 
     /**
      * 服务名称
