@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.dazhou</groupId>
-            <artifactId>rz-rpc-easy</artifactId>
+            <artifactId>rz-rpc-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
