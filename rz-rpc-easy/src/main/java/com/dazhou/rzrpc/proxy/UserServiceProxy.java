@@ -1,4 +1,4 @@
-package com.dazhou.example.consumer;
+package com.dazhou.rzrpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
@@ -23,7 +23,7 @@ public class UserServiceProxy implements UserService {
         JdkSerializer jdkSerializer = new JdkSerializer();
         //构建请求对象
         RpcRequest rpcRequest=RpcRequest.builder()
-                .ServiceName(UserService.class.getName())
+                .serviceName(UserService.class.getName())
                 .methodName("getUser")
                 .parameterTypes(new Class[]{User.class})
                 .args(new Object[]{user})

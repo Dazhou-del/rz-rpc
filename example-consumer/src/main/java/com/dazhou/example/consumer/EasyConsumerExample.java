@@ -2,6 +2,7 @@ package com.dazhou.example.consumer;
 
 import com.dazhou.example.common.model.User;
 import com.dazhou.example.common.service.UserService;
+import com.dazhou.rzrpc.proxy.ServiceProxyFactory;
 
 /**
  * 简易消费者示例
@@ -15,6 +16,7 @@ public class EasyConsumerExample {
         User user = new User();
         user.setName("daZhou");
         //调用
+        userService = ServiceProxyFactory.getProxy(UserService.class);
         User newUser = userService.getUser(user);
         if(newUser!=null){
             System.out.println(newUser.getName());
