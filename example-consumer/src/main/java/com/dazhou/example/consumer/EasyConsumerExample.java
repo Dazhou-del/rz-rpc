@@ -11,12 +11,11 @@ import com.dazhou.rzrpc.proxy.ServiceProxyFactory;
  */
 public class EasyConsumerExample {
     public static void main(String[] args) {
-        //todo 需要获取UserService的实现类对象
-        UserService userService=null;
+        //需要获取UserService的实现类对象
+        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
         User user = new User();
         user.setName("daZhou");
         //调用
-        userService = ServiceProxyFactory.getProxy(UserService.class);
         User newUser = userService.getUser(user);
         if(newUser!=null){
             System.out.println(newUser.getName());
