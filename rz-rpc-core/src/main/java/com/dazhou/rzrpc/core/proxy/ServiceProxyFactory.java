@@ -1,4 +1,4 @@
-package com.dazhou.rzrpc.proxy;
+package com.dazhou.rzrpc.core.proxy;
 
 import java.lang.reflect.Proxy;
 
