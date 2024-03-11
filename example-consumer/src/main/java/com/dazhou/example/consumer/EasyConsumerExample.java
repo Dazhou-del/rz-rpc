@@ -2,7 +2,8 @@ package com.dazhou.example.consumer;
 
 import com.dazhou.example.common.model.User;
 import com.dazhou.example.common.service.UserService;
-import com.dazhou.rzrpc.proxy.ServiceProxyFactory;
+import com.dazhou.rzrpc.core.proxy.ServiceProxyFactory;
+
 
 /**
  * 简易消费者示例
@@ -22,5 +23,8 @@ public class EasyConsumerExample {
         }else {
             System.out.println("user=null");
         }
+        //测试模拟方法
+        long number = userService.getNumber();
+        System.out.println(number);
     }
 }

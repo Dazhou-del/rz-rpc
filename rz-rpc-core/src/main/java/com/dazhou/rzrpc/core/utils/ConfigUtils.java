@@ -50,6 +50,7 @@ public class ConfigUtils {
         if (StrUtil.equals(suffix,"yml")){
             return getRpcConfig(props);
         }
+        //如果是yaml文件
         if (StrUtil.equals(suffix,"yaml")){
             return getRpcConfig(props);
         }
