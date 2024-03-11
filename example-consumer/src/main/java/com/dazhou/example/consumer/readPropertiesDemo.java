@@ -11,7 +11,15 @@ import com.dazhou.rzrpc.core.utils.ConfigUtils;
 public class readPropertiesDemo {
 
     public static void main(String[] args) {
-        RpcConfig rpc = ConfigUtils.loadConfig(RpcConfig.class, "rpc");
-        System.out.println(rpc);
+//        RpcConfig rpc = ConfigUtils.loadConfig(RpcConfig.class, "rpc","properties");
+//        System.out.println(rpc);
+
+//        //测试读取yml文件
+        RpcConfig rpc2 = ConfigUtils.loadConfig(RpcConfig.class, "rpc","yml");
+        System.out.println(rpc2);
+//
+//        //测试读取yaml文件
+//        RpcConfig rpc3 = ConfigUtils.loadConfig(RpcConfig.class, "rpc","yaml");
+//        System.out.println(rpc3);
     }
 }

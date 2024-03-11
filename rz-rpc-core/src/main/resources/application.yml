@@ -1,4 +1,4 @@
 rpc:
-  name: xxxx
+  name: ce
   version: 1.7
   serverPort: 123

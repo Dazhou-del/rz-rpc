@@ -44,6 +44,8 @@ public class ConfigUtils {
         configFileBuilder.append(suffix);
         //根据文件地址获取Props类
         Props props = new Props(configFileBuilder.toString());
+        //配置文件变更时自动加载
+        props.autoLoad(true);
         //如果是yml文件
         if (StrUtil.equals(suffix,"yml")){
             return getRpcConfig(props);
