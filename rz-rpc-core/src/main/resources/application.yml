@@ -1,0 +1,4 @@
+rpc:
+  name: xxxx
+  version: 1.7
+  serverPort: 123

@@ -2,6 +2,7 @@ package com.dazhou.example.provider;
 
 import com.dazhou.example.common.service.UserService;
 import com.dazhou.rzrpc.core.RpcApplication;
+import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.registry.LocalRegistry;
 import com.dazhou.rzrpc.service.HttpServer;
 import com.dazhou.rzrpc.service.VertxHttpServer;

@@ -1,0 +1,5 @@
+rpc:
+  name: yaml
+  version: 1.9
+  serverPort: 321
+  serverHost: 123.12.32
