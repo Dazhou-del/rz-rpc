@@ -36,7 +36,9 @@ public class ConfigUtils {
             configFileBuilder.append("-").append(environment);
         }
         configFileBuilder.append(".properties");
+        //根据文件地址获取Props类
         Props props = new Props(configFileBuilder.toString());
+        //读取配置转换成对应的bean对象
         return props.toBean(tClass, prefix);
     }
 }
