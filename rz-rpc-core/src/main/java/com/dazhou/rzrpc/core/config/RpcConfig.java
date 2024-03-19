@@ -1,5 +1,6 @@
 package com.dazhou.rzrpc.core.config;
 
+import com.dazhou.rzrpc.core.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -35,4 +36,8 @@ public class RpcConfig {
      */
     private Boolean mock=false;
 
+    /**
+     * 序列化器
+     */
+    private String serializer = SerializerKeys.JDK;
 }
