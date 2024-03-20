@@ -54,9 +54,11 @@ public class ConfigUtils {
         if (StrUtil.equals(suffix,"yaml")){
             return getRpcConfig(props);
         }
-        //读取配置转换成对应的bean对象
-        return props.toBean(tClass, prefix);
-
+        if (StrUtil.equals(suffix,"properties")){
+            //读取配置转换成对应的bean对象
+            return props.toBean(tClass, prefix);
+        }
+        return null;
     }
 
     private static <T> T getRpcConfig(Props props) {

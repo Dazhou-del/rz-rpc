@@ -1,0 +1,5 @@
+jdk=com.dazhou.rzrpc.core.serializer.JdkSerializer
+hessian=com.dazhou.rzrpc.core.serializer.HessianSerializer
+fastjson=com.dazhou.rzrpc.core.serializer.FastJsonSerializer
+kryo=com.dazhou.rzrpc.core.serializer.KryoSerializer
+json=com.dazhou.rzrpc.core.serializer.JsonSerializer

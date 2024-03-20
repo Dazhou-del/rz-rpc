@@ -28,4 +28,6 @@ public interface Serializer {
      * @throws IOException
      */
     <T> T deserialize(byte[] bytes, Class<T> type) throws IOException;
+
+
 }

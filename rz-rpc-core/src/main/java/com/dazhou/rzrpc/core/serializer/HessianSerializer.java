@@ -1,5 +1,7 @@
 package com.dazhou.rzrpc.core.serializer;
 
+import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
 import com.caucho.hessian.io.HessianInput;
 import com.caucho.hessian.io.HessianOutput;
 

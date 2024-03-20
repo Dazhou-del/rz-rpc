@@ -19,6 +19,7 @@ public class SerializerFactory {
         put(SerializerKeys.HESSIAN, new HessianSerializer());
     }};*/
 
+
     static {
         SpiLoader.load(Serializer.class);
     }
@@ -27,7 +28,7 @@ public class SerializerFactory {
      * 默认序列化器
      */
 //    private static final Serializer DEFAULT_SERIALIZER = KEY_SERIALIZER_MAP.get("jdk");
-    private static final Serializer DEFAULT_SERIALIZER=new JdkSerializer();
+    private  static final  Serializer DEFAULT_SERIALIZER=new JdkSerializer();
 
     /**
      * 获取实例
@@ -35,7 +36,7 @@ public class SerializerFactory {
      * @param key
      * @return
      */
-    public static Serializer getInstance(String key) {
+    public static  Serializer getInstance(String key) {
 //        return KEY_SERIALIZER_MAP.getOrDefault(key, DEFAULT_SERIALIZER);
         return SpiLoader.getInstance(Serializer.class,key);
     }

@@ -24,7 +24,7 @@ public class EasyConsumerExample {
             System.out.println("user=null");
         }
         //测试模拟方法
-        long number = userService.getNumber();
-        System.out.println(number);
+//        long number = userService.getNumber();
+//        System.out.println(number);
     }
 }

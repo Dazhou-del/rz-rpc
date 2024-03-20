@@ -1,5 +1,6 @@
 package com.dazhou.rzrpc.core.serializer;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,10 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -22,9 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SpiLoader {
 
     /**
-     * 存储已加载的类：接口名 =>（key => 实现类）
+     * 存储已加载的类：接口名 =>（key => 实现类）  懒加载
      */
-    private static Map<String, Map<String, Class<?>>> loaderMap = new ConcurrentHashMap<>();
+    private static Map<String, Map<String, Class<?>>> loaderMap=new ConcurrentHashMap<>();
 
 
     /**
@@ -86,15 +84,18 @@ public class SpiLoader {
         // 从实例缓存中加载指定类型的实例
         String implClassName = implClass.getName();
         if (!instanceCache.containsKey(implClassName)) {
-            try {
-                //如果缓存中没有这个key对应的实例 则将实例放入缓存中
-                instanceCache.put(implClassName, implClass.newInstance());
-            } catch (InstantiationException | IllegalAccessException e) {
-                String errorMsg = String.format("%s 类实例化失败", implClassName);
-                throw new RuntimeException(errorMsg, e);
-            }
+//            synchronized (SpiLoader.class) {
+                try {
+                    //如果缓存中没有这个key对应的实例 则将实例放入缓存中 implClass.newInstance()获取class的实例
+                    instanceCache.put(implClassName, implClass.newInstance());
+                } catch (InstantiationException | IllegalAccessException e) {
+                    String errorMsg = String.format("%s 类实例化失败", implClassName);
+                    throw new RuntimeException(errorMsg, e);
+                }
+//            }
         }
-        return (T) instanceCache.get(implClassName);
+        T t = (T) instanceCache.get(implClassName);
+        return t;
     }
 
     /**
@@ -108,7 +109,11 @@ public class SpiLoader {
         // 扫描路径，用户自定义的 SPI 优先级高于系统 SPI
         Map<String, Class<?>> keyClassMap = new HashMap<>();
         for (String scanDir : SCAN_DIRS) {
+            String loadClassName = loadClass.getName();
             List<URL> resources = ResourceUtil.getResources(scanDir + loadClass.getName());
+//            if (resources.size()==0){
+//                continue;
+//            }
             // 读取每个资源文件
             for (URL resource : resources) {
                 try {
@@ -121,8 +126,9 @@ public class SpiLoader {
                     while ((line = bufferedReader.readLine()) != null) {
                         String[] strArray = line.split("=");
                         if (strArray.length > 1) {
-                            String key = strArray[0];
-                            String className = strArray[1];
+                            String key = strArray[0];  //例如可能=jdk
+                            String className = strArray[1]; //可能等于=com.dazhou.rzrpc.core.serializer.JdkSerializer
+                            //（Class.forName）返回与给定的字符串名称相关联类或接口的Class对象。
                             keyClassMap.put(key, Class.forName(className));
                         }
                     }
@@ -131,9 +137,11 @@ public class SpiLoader {
                 }
             }
         }
+        //数据可能是com.dazhou.rzrpc.core.serializer,(jdk,JdkSerializer.class);
         loaderMap.put(loadClass.getName(), keyClassMap);
         return keyClassMap;
     }
+
 
 
 }

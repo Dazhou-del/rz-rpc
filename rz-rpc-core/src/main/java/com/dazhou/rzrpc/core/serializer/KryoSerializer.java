@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-11 17:35
  */
-public class KryoSerializer implements Serializer{
+public class KryoSerializer implements Serializer {
     /**
      * kryo 线程不安全，使用 ThreadLocal 保证每个线程只有一个 Kryo
      */
@@ -41,3 +41,5 @@ public class KryoSerializer implements Serializer{
         return result;
     }
 }
+
+

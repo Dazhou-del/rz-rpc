@@ -3,9 +3,10 @@ package com.dazhou.example.provider;
 import com.dazhou.example.common.service.UserService;
 import com.dazhou.rzrpc.core.RpcApplication;
 import com.dazhou.rzrpc.core.config.RpcConfig;
-import com.dazhou.rzrpc.registry.LocalRegistry;
+import com.dazhou.rzrpc.core.registry.LocalRegistry;
+import com.dazhou.rzrpc.core.service.VertxHttpServer;
+
 import com.dazhou.rzrpc.service.HttpServer;
-import com.dazhou.rzrpc.service.VertxHttpServer;
 
 /**
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
@@ -21,7 +22,7 @@ public class EasyProviderExample {
         LocalRegistry.register(UserService.class.getName(), UserServiceImpl.class);
 
         // 启动 web 服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        VertxHttpServer vertxHttpServer = new VertxHttpServer();
+        vertxHttpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
     }
 }

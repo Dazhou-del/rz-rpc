@@ -24,7 +24,9 @@ public class RpcApplication {
         log.info("rpc init, config = {}", newrRpcConfig.toString());
     }
 
-
+    /**
+     * 创建实例时会自动调用次方法
+     */
     public static  void init(){
        RpcConfig newRpcConfig;
         try {
@@ -37,6 +39,10 @@ public class RpcApplication {
 
     }
 
+    /**
+     * 单例 双检
+     * @return
+     */
     public static RpcConfig getRpcConfig(){
         if(rpcConfig==null){
             synchronized(RpcApplication.class){

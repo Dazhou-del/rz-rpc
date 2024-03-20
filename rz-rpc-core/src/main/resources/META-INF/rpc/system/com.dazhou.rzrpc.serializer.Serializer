@@ -1,4 +1,0 @@
-jdk=com.dazhou.rzrpc.core.serializer.JdkSerializer
-hessian=com.dazhou.rzrpc.core.serializer.HessianSerializer
-json=com.dazhou.rzrpc.core.serializer.JsonSerializer
-kryo=com.dazhou.rzrpc.core.serializer.KryoSerializer

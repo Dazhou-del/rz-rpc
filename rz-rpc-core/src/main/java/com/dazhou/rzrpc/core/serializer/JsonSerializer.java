@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Json 序列化器
+ * json序列化
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
- * @create 2024-03-11 17:19
+ * @create 2024-03-20 16:38
  */
 public class JsonSerializer implements Serializer{
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -70,3 +70,4 @@ public class JsonSerializer implements Serializer{
         return type.cast(rpcResponse);
     }
 }
+
