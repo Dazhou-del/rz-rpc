@@ -1,12 +1,14 @@
 package com.dazhou.rzrpc.core;
 
+import com.dazhou.rzrpc.core.config.RegistryConfig;
 import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.core.constant.RpcConstant;
+import com.dazhou.rzrpc.core.registry.RegistryFactory;
 import com.dazhou.rzrpc.core.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * RPC应用框架
+ * RPC应用框架,支持传入自定义配置
  * 相当于holder，存放了项目全局用到的变量，双检锁单例模式实现
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-11 11:10
@@ -22,6 +24,11 @@ public class RpcApplication {
     public static void init(RpcConfig newrRpcConfig){
         rpcConfig=newrRpcConfig;
         log.info("rpc init, config = {}", newrRpcConfig.toString());
+        //注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry  = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("registry init, config = {}", registryConfig);
     }
 
     /**

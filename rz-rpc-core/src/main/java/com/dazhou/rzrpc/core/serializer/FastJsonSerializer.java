@@ -14,6 +14,7 @@ import java.io.IOException;
 public class FastJsonSerializer implements Serializer{
     @Override
     public <T> byte[] serialize(T t) {
+
         return JSONB.toBytes(t);
     }
 
