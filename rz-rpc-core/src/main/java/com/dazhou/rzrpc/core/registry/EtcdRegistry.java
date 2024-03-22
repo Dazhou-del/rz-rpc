@@ -5,15 +5,11 @@ import com.dazhou.rzrpc.core.Registry;
 import com.dazhou.rzrpc.core.config.RegistryConfig;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import io.etcd.jetcd.*;
-import io.etcd.jetcd.kv.GetResponse;
 import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
-
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -47,8 +43,8 @@ public class EtcdRegistry implements Registry {
         long leaseId = leaseClient.grant(600).get().getID();
 
         //设置要存储的键值对
-        String serviceKey = ETCD_ROOT_PATH + serviceMetaInfo.getServiceKey();
-        ByteSequence key = ByteSequence.from(serviceKey, StandardCharsets.UTF_8);
+        String registerKey = ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey();
+        ByteSequence key = ByteSequence.from(registerKey, StandardCharsets.UTF_8);
         ByteSequence value = ByteSequence.from(JSONUtil.toJsonStr(serviceMetaInfo), StandardCharsets.UTF_8);
 
         //将键值对与租约关联起来，并设置过期时间
@@ -58,7 +54,8 @@ public class EtcdRegistry implements Registry {
 
     @Override
     public void unRegister(ServiceMetaInfo serviceMetaInfo) {
-        kvClient.delete(ByteSequence.from(ETCD_ROOT_PATH+serviceMetaInfo.getServiceKey(),StandardCharsets.UTF_8));
+        String registerKey = ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey();
+        kvClient.delete(ByteSequence.from(registerKey,StandardCharsets.UTF_8));
     }
 
     @Override
