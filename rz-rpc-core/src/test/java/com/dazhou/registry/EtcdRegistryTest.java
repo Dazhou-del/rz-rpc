@@ -1,10 +1,9 @@
 package com.dazhou.registry;
 
-import com.dazhou.rzrpc.core.Registry;
+import com.dazhou.rzrpc.core.registry.Registry;
 import com.dazhou.rzrpc.core.config.RegistryConfig;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import com.dazhou.rzrpc.core.registry.EtcdRegistry;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
@@ -67,5 +66,13 @@ public class EtcdRegistryTest {
         String serviceKey = serviceMetaInfo.getServiceKey();
         List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceKey);
         System.out.println(serviceMetaInfoList);
+    }
+
+    @Test
+    public void heartBeat() throws Exception {
+        // init 方法中已经执行心跳检测了
+        register();
+        // 阻塞 1 分钟
+        Thread.sleep(60 * 1000L);
     }
 }

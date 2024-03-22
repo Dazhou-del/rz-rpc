@@ -1,4 +1,4 @@
-package com.dazhou.rzrpc.core;
+package com.dazhou.rzrpc.core.registry;
 
 import com.dazhou.rzrpc.core.config.RegistryConfig;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
@@ -43,5 +43,8 @@ public interface Registry {
      */
     void destory();
 
-
+    /**
+     * 心跳检测（服务端）
+     */
+    void heartBeat();
 }

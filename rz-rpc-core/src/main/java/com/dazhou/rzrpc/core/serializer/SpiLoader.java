@@ -21,12 +21,16 @@ public class SpiLoader {
 
     /**
      * 存储已加载的类：接口名 =>（key => 实现类）  懒加载
+     * 示例数据:
+     * (com.dazhou.rzrpc.core.serializer,(jdk,JdkSerializer.class))
      */
     private static Map<String, Map<String, Class<?>>> loaderMap=new ConcurrentHashMap<>();
 
 
     /**
      * 对象实例缓存（避免重复 new），类路径 => 对象实例，单例模式
+     * 示例数据:
+     * (jdk,JdkSerializer.class)
      */
     private static Map<String,Object> instanceCache=new ConcurrentHashMap<>();
 

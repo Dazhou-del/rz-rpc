@@ -1,6 +1,5 @@
 package com.dazhou.rzrpc.core.registry;
 
-import com.dazhou.rzrpc.core.Registry;
 import com.dazhou.rzrpc.core.serializer.SpiLoader;
 
 /**

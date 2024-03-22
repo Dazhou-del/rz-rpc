@@ -3,6 +3,7 @@ package com.dazhou.rzrpc.core;
 import com.dazhou.rzrpc.core.config.RegistryConfig;
 import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.core.constant.RpcConstant;
+import com.dazhou.rzrpc.core.registry.Registry;
 import com.dazhou.rzrpc.core.registry.RegistryFactory;
 import com.dazhou.rzrpc.core.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class RpcApplication {
         Registry registry  = RegistryFactory.getInstance(registryConfig.getRegistry());
         registry.init(registryConfig);
         log.info("registry init, config = {}", registryConfig);
+
     }
 
     /**
