@@ -1,1 +1,2 @@
 etcd=com.dazhou.rzrpc.core.registry.EtcdRegistry
+zookeeper=com.dazhou.rzrpc.core.registry.ZooKeeperRegistry

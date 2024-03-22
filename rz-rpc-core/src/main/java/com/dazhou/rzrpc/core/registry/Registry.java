@@ -36,7 +36,7 @@ public interface Registry {
      * @param serviceKey
      * @return
      */
-    List<ServiceMetaInfo> serviceDiscovery(String serviceKey) throws ExecutionException, InterruptedException;
+    List<ServiceMetaInfo> serviceDiscovery(String serviceKey);
 
     /**
      * 服务销毁
