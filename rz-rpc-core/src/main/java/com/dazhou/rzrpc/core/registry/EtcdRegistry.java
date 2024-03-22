@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +35,8 @@ public class EtcdRegistry implements Registry {
      * 本机注册的节点 key 集合（用于维护续期）
      */
     private final Set<String> localRegisterNodeKeySet=new HashSet<>();
+
+    private final RegistryServiceCache registryServiceCache=new RegistryServiceCache();
 
     /**
      * 服务的根节点
@@ -80,6 +83,11 @@ public class EtcdRegistry implements Registry {
 
     @Override
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
+        //先从缓存中获取服务
+        List<ServiceMetaInfo> serviceMetaInfoList = registryServiceCache.readCache();
+        if (serviceMetaInfoList!=null){
+            return serviceMetaInfoList;
+        }
         // 前缀搜索，结尾一定要加 '/'
         String searchPrefix = ETCD_ROOT_PATH + serviceKey;
         //+ "/";
@@ -93,12 +101,14 @@ public class EtcdRegistry implements Registry {
                     .get()
                     .getKvs();
             //解析服务信息
-            return keyValueList.stream()
+            List<ServiceMetaInfo> serviceMetaInfos = keyValueList.stream()
                     .map(keyValue -> {
                         String value = keyValue.getValue().toString(StandardCharsets.UTF_8);
                         return JSONUtil.toBean(value, ServiceMetaInfo.class);
                     })
                     .collect(Collectors.toList());
+            //写入缓存中
+            return serviceMetaInfos;
         } catch (Exception e) {
             throw new RuntimeException("获取服务列表失败",e);
         }
@@ -108,9 +118,19 @@ public class EtcdRegistry implements Registry {
     @Override
     public void destory() {
         System.out.println("当前节点下线");
+
+        for (String key : localRegisterNodeKeySet) {
+            try {
+                kvClient.delete(ByteSequence.from(key,StandardCharsets.UTF_8)).get();
+            } catch (Exception e) {
+                throw new RuntimeException(key+"节点下线失败");
+            }
+        }
+
         if (kvClient!=null){
             kvClient.close();
         }
+
         if (client!=null){
             client.close();
         }
