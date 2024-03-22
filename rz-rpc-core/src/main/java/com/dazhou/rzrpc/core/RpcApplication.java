@@ -32,7 +32,7 @@ public class RpcApplication {
     }
 
     /**
-     * 创建实例时会自动调用次方法
+     * 创建实例时会自动调用此方法
      */
     public static  void init(){
        RpcConfig newRpcConfig;

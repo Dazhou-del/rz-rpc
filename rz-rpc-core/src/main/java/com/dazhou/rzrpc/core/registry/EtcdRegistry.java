@@ -43,8 +43,8 @@ public class EtcdRegistry implements Registry {
     public void register(ServiceMetaInfo serviceMetaInfo) throws Exception{
         //创建Lease和kv客户端
         Lease leaseClient = client.getLeaseClient();
-        //创建一个30s的租约
-        long leaseId = leaseClient.grant(30).get().getID();
+        //创建一个60s的租约
+        long leaseId = leaseClient.grant(600).get().getID();
 
         //设置要存储的键值对
         String serviceKey = ETCD_ROOT_PATH + serviceMetaInfo.getServiceKey();
@@ -64,7 +64,8 @@ public class EtcdRegistry implements Registry {
     @Override
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
         // 前缀搜索，结尾一定要加 '/'
-        String searchPrefix = ETCD_ROOT_PATH + serviceKey + "/";
+        String searchPrefix = ETCD_ROOT_PATH + serviceKey;
+        //+ "/";
 
         try {
             //构建前缀查询器

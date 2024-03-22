@@ -14,6 +14,7 @@ import com.dazhou.rzrpc.core.registry.RegistryFactory;
 import com.dazhou.rzrpc.core.serializer.JdkSerializer;
 import com.dazhou.rzrpc.core.serializer.Serializer;
 import com.dazhou.rzrpc.core.serializer.SerializerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-07 15:36
  */
+@Slf4j
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -58,8 +60,10 @@ public class ServiceProxy implements InvocationHandler {
             }
             //暂时获取第一个
             ServiceMetaInfo serviceMetaInfo1 = serviceMetaInfos.get(0);
+            String serviceAddress = serviceMetaInfo1.getServiceAddress();
+            log.info(serviceAddress);
             // 发送请求
-            try (HttpResponse httpResponse = HttpRequest.post(serviceMetaInfo1.getServiceAddress())
+            try (HttpResponse httpResponse = HttpRequest.post(serviceAddress)
                     .body(bodyBytes)
                     .execute()) {
                 byte[] result = httpResponse.bodyBytes();
