@@ -5,6 +5,7 @@ import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import java.util.List;
 
 /**
+ * 服务缓存
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-22 15:51
  */
