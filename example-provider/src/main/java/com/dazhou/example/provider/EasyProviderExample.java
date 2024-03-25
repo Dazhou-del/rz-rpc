@@ -9,6 +9,7 @@ import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import com.dazhou.rzrpc.core.registry.LocalRegistry;
 import com.dazhou.rzrpc.core.registry.RegistryFactory;
 import com.dazhou.rzrpc.core.service.VertxHttpServer;
+import com.dazhou.rzrpc.core.service.tcp.VertxTcpServer;
 
 /**
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
@@ -38,7 +39,11 @@ public class EasyProviderExample {
         }
 
         // 启动 web 服务
-        VertxHttpServer vertxHttpServer = new VertxHttpServer();
-        vertxHttpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+//        VertxHttpServer vertxHttpServer = new VertxHttpServer();
+//        vertxHttpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+
+        //启动Tcp服务
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(8888);
     }
 }

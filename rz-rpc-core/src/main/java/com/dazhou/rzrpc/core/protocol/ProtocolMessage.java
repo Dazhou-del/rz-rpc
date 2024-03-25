@@ -1,12 +1,17 @@
 package com.dazhou.rzrpc.core.protocol;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 协议消息结构
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-25 11:54
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProtocolMessage<T> {
 
     /**
