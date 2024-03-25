@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 协议枚举
+ * 协议序列化枚举
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-25 14:19
  */
