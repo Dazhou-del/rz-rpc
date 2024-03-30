@@ -1,7 +1,11 @@
-package com.dazhou.rzrpc.core.protocol;
+package com.dazhou.rzrpc.core.service.tcp;
 
 import com.dazhou.rzrpc.core.model.RpcRequest;
 import com.dazhou.rzrpc.core.model.RpcResponse;
+import com.dazhou.rzrpc.core.protocol.ProtocolMessage;
+import com.dazhou.rzrpc.core.protocol.ProtocolMessageDecoder;
+import com.dazhou.rzrpc.core.protocol.ProtocolMessageEncoder;
+import com.dazhou.rzrpc.core.protocol.ProtocolMessageTypeEnum;
 import com.dazhou.rzrpc.core.registry.LocalRegistry;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
@@ -18,11 +22,13 @@ public class TcpServerHandler implements Handler<NetSocket> {
     @Override
     public void handle(NetSocket netSocket) {
         //处理连接
-        netSocket.handler(buffer -> {
+
+//        netSocket.handler(buffer -> {
+        TcpBufferHandlerWrapper bufferHandlerWrapper = new TcpBufferHandlerWrapper(buffer -> {
             //接受请求，解码
             ProtocolMessage<RpcRequest> protocolMessage;
             try {
-                protocolMessage=(ProtocolMessage<RpcRequest>)ProtocolMessageDecoder.decode(buffer);
+                protocolMessage = (ProtocolMessage<RpcRequest>) ProtocolMessageDecoder.decode(buffer);
             } catch (IOException e) {
                 throw new RuntimeException("协议消息解码错误");
             }
@@ -50,12 +56,14 @@ public class TcpServerHandler implements Handler<NetSocket> {
             ProtocolMessage<RpcResponse> rpcResponseProtocolMessage = new ProtocolMessage<>(header, rpcResponse);
             //使用编码器进行编码 
             try {
-                Buffer encode  = ProtocolMessageEncoder.encode(rpcResponseProtocolMessage);
+                Buffer encode = ProtocolMessageEncoder.encode(rpcResponseProtocolMessage);
                 //写到Socket中
                 netSocket.write(encode);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         });
+        netSocket.handler(bufferHandlerWrapper);
     }
 }
