@@ -1,5 +1,6 @@
 package com.dazhou.rzrpc.core.config;
 
+import com.dazhou.rzrpc.core.loadbalancer.LoadBalancerKeys;
 import com.dazhou.rzrpc.core.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -45,4 +46,9 @@ public class RpcConfig {
      * 注册配置
      */
     private RegistryConfig registryConfig;
+
+    /**
+     * 负载均衡器配置
+     */
+    private String loadBalancer= LoadBalancerKeys.ROUND_ROBIN;
 }

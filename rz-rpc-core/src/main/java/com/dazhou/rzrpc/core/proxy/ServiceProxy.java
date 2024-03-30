@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.dazhou.rzrpc.core.RpcApplication;
 import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.core.constant.RpcConstant;
+import com.dazhou.rzrpc.core.loadbalancer.LoadBalancer;
+import com.dazhou.rzrpc.core.loadbalancer.LoadBalancerFactory;
 import com.dazhou.rzrpc.core.model.RpcRequest;
 import com.dazhou.rzrpc.core.model.RpcResponse;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,8 +59,14 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfos)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            //暂时获取第一个
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfos.get(0);
+            //负载均衡
+            //获取具体实现类
+            LoadBalancer balancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            // 将调用方法名（请求路径）作为负载均衡参数
+            HashMap<String, Object> requestParams  = new HashMap<>();
+            requestParams.put("methodName",rpcRequest.getMethodName());
+            //调用负载均衡 获取具体的服务
+            ServiceMetaInfo selectedServiceMetaInfo = balancer.selectService(requestParams, serviceMetaInfos);
             String serviceAddress = selectedServiceMetaInfo.getServiceAddress();
             log.info(serviceAddress);
 

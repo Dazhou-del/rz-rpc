@@ -1,0 +1,3 @@
+roundRobin=com.dazhou.rzrpc.core.loadbalancer.RoundRobinLoadBalancer
+random=com.dazhou.rzrpc.core.loadbalancer.RandomLoadBalancer
+consistentHash=com.dazhou.rzrpc.core.loadbalancer.ConsistentHashLoadBalancer
