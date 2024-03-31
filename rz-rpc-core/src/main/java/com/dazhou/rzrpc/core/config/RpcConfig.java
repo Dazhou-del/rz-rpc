@@ -1,5 +1,6 @@
 package com.dazhou.rzrpc.core.config;
 
+import com.dazhou.rzrpc.core.fault.retry.RetryStrategyKeys;
 import com.dazhou.rzrpc.core.loadbalancer.LoadBalancerKeys;
 import com.dazhou.rzrpc.core.serializer.SerializerKeys;
 import lombok.Data;
@@ -51,4 +52,9 @@ public class RpcConfig {
      * 负载均衡器配置
      */
     private String loadBalancer= LoadBalancerKeys.ROUND_ROBIN;
+
+    /**
+     * 重试策略
+     */
+    private String retryStrategy = RetryStrategyKeys.NO;
 }

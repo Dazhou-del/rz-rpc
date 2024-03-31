@@ -1,7 +1,6 @@
 package com.dazhou.retry;
 
 import com.dazhou.rzrpc.core.fault.retry.FixedIntervalRetryStrategy;
-import com.dazhou.rzrpc.core.fault.retry.NoRetryStrategy;
 import com.dazhou.rzrpc.core.fault.retry.RetryStrategy;
 import com.dazhou.rzrpc.core.model.RpcResponse;
 import org.junit.jupiter.api.Test;

@@ -1,0 +1,2 @@
+no=com.dazhou.rzrpc.core.fault.retry.NoRetryStrategy
+fixedInterval=com.dazhou.rzrpc.core.fault.retry.FixedIntervalRetryStrategy
