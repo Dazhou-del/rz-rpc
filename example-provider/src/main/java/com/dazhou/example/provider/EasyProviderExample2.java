@@ -14,7 +14,7 @@ import com.dazhou.rzrpc.core.service.tcp.VertxTcpServer;
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-03-07 12:00
  */
-public class EasyProviderExample {
+public class EasyProviderExample2 {
     public static void main(String[] args) {
         //RPC框架初始化
         RpcApplication.init();
@@ -29,7 +29,7 @@ public class EasyProviderExample {
         //注册到注册中心
         serviceMetaInfo.setServiceName(serviceName);
         serviceMetaInfo.setServiceHost(rpcConfig.getServerHost());
-        serviceMetaInfo.setServicePort(rpcConfig.getServerPort());
+        serviceMetaInfo.setServicePort(9999);
         serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
         try {
             registry.register(serviceMetaInfo);
@@ -43,6 +43,6 @@ public class EasyProviderExample {
 
         //启动Tcp服务
         VertxTcpServer vertxTcpServer = new VertxTcpServer();
-        vertxTcpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        vertxTcpServer.doStart(9999);
     }
 }

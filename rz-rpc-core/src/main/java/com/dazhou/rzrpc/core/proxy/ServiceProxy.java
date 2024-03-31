@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 动态代理
@@ -42,44 +43,43 @@ public class ServiceProxy implements InvocationHandler {
                 .parameterTypes(method.getParameterTypes())
                 .args(args)
                 .build();
+
+        // 序列化
+        byte[] bodyBytes = serializer.serialize(rpcRequest);
+
+        //这里地址被硬编码了（需要使用注册中心和服务发现机制解决）
+        //从服务中心获取服务提供者请求地址
+        RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
+        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
+
+        serviceMetaInfo.setServiceName(serviceName);
+        serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
+        //获取全部服务信息
+        List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
+        if (CollUtil.isEmpty(serviceMetaInfos)) {
+            throw new RuntimeException("暂无服务地址");
+        }
+        //负载均衡
+        //获取具体实现类
+        LoadBalancer balancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+        // 将调用方法名（请求路径）作为负载均衡参数
+        HashMap<String, Object> requestParams = new HashMap<>();
+        requestParams.put("methodName", rpcRequest.getMethodName());
+        //调用负载均衡 获取具体的服务
+        ServiceMetaInfo selectedServiceMetaInfo = balancer.selectService(requestParams, serviceMetaInfos);
+        String serviceAddress = selectedServiceMetaInfo.getServiceAddress();
+        log.info(serviceAddress);
+        //发起TCP请求
         try {
-            // 序列化
-            byte[] bodyBytes = serializer.serialize(rpcRequest);
-
-            //这里地址被硬编码了（需要使用注册中心和服务发现机制解决）
-            //从服务中心获取服务提供者请求地址
-            RpcConfig rpcConfig = RpcApplication.getRpcConfig();
-            Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
-            ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
-
-            serviceMetaInfo.setServiceName(serviceName);
-            serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
-            //获取全部服务信息
-//            List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
-            List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
-            System.out.println("到这了");
-            if (CollUtil.isEmpty(serviceMetaInfos)) {
-                throw new RuntimeException("暂无服务地址");
-            }
-            //负载均衡
-            //获取具体实现类
-            LoadBalancer balancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
-            // 将调用方法名（请求路径）作为负载均衡参数
-            HashMap<String, Object> requestParams  = new HashMap<>();
-            requestParams.put("methodName",rpcRequest.getMethodName());
-            //调用负载均衡 获取具体的服务
-            ServiceMetaInfo selectedServiceMetaInfo = balancer.selectService(requestParams, serviceMetaInfos);
-
-            String serviceAddress = selectedServiceMetaInfo.getServiceAddress();
-            log.info(serviceAddress);
-            //发起TCP请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(selectedServiceMetaInfo, rpcRequest);
             return rpcResponse.getData();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("调用失败");
         }
-
     }
 
 }
+
+
 
