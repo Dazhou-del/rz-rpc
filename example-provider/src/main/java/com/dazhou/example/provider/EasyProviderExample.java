@@ -1,14 +1,13 @@
 package com.dazhou.example.provider;
 
 import com.dazhou.example.common.service.UserService;
-import com.dazhou.rzrpc.core.registry.Registry;
 import com.dazhou.rzrpc.core.RpcApplication;
 import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.core.constant.RpcConstant;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import com.dazhou.rzrpc.core.registry.LocalRegistry;
+import com.dazhou.rzrpc.core.registry.Registry;
 import com.dazhou.rzrpc.core.registry.RegistryFactory;
-import com.dazhou.rzrpc.core.service.VertxHttpServer;
 import com.dazhou.rzrpc.core.service.tcp.VertxTcpServer;
 
 /**

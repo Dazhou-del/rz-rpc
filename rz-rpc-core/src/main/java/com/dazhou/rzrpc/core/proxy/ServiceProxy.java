@@ -55,7 +55,9 @@ public class ServiceProxy implements InvocationHandler {
             serviceMetaInfo.setServiceName(serviceName);
             serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
             //获取全部服务信息
+//            List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
             List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
+            System.out.println("到这了");
             if (CollUtil.isEmpty(serviceMetaInfos)) {
                 throw new RuntimeException("暂无服务地址");
             }
@@ -67,21 +69,9 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName",rpcRequest.getMethodName());
             //调用负载均衡 获取具体的服务
             ServiceMetaInfo selectedServiceMetaInfo = balancer.selectService(requestParams, serviceMetaInfos);
+
             String serviceAddress = selectedServiceMetaInfo.getServiceAddress();
             log.info(serviceAddress);
-
-/*            // Http请求发送请求
-            try (HttpResponse httpResponse = HttpRequest.post(serviceAddress)
-                    .body(bodyBytes)
-                    .execute()) {
-                byte[] result = httpResponse.bodyBytes();
-                // 反序列化
-                RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
-                return rpcResponse.getData();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
             //发起TCP请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(selectedServiceMetaInfo, rpcRequest);
             return rpcResponse.getData();
