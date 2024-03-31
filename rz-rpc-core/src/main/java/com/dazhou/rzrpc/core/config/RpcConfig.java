@@ -1,6 +1,7 @@
 package com.dazhou.rzrpc.core.config;
 
 import com.dazhou.rzrpc.core.fault.retry.RetryStrategyKeys;
+import com.dazhou.rzrpc.core.fault.tolerant.TolerantStrategyKeys;
 import com.dazhou.rzrpc.core.loadbalancer.LoadBalancerKeys;
 import com.dazhou.rzrpc.core.serializer.SerializerKeys;
 import lombok.Data;
@@ -57,4 +58,9 @@ public class RpcConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKeys.NO;
+
+    /**
+     * 容错策略
+     */
+    private String tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
 }

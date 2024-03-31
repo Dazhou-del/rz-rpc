@@ -1,0 +1,4 @@
+failBack=com.dazhou.rzrpc.core.fault.tolerant.FailBackTolerantStrategy
+failFast=com.dazhou.rzrpc.core.fault.tolerant.FailFastTolerantStrategy
+failOver=com.dazhou.rzrpc.core.fault.tolerant.FailOverTolerantStrategy
+failSafe=com.dazhou.rzrpc.core.fault.tolerant.FailSafeTolerantStrategy
