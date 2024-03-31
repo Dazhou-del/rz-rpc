@@ -25,14 +25,13 @@ public class VertxTcpServer implements HttpServer {
         //创建Tcp服务器
         NetServer server = vertx.createNetServer();
         //处理请求
-        server.connectHandler(socket->{
-            // 构造 parser
-            RecordParser parser = RecordParser.newFixed(8);
-
-
-        });
+//        server.connectHandler(socket->{
+//            // 构造 parser
+//            RecordParser parser = RecordParser.newFixed(8);
+//
+//        });
         //使用自定义请求处理器
-//        server.connectHandler(new TcpServerHandler());
+        server.connectHandler(new TcpServerHandler());
 
         server.listen(port,result->{
             if (result.succeeded()){
