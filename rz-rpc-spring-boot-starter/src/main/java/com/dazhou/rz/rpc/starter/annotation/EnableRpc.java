@@ -1,5 +1,10 @@
 package com.dazhou.rz.rpc.starter.annotation;
 
+import com.dazhou.rz.rpc.starter.bootstrap.RpcConsumerBootstrap;
+import com.dazhou.rz.rpc.starter.bootstrap.RpcInitBootStrap;
+import com.dazhou.rz.rpc.starter.bootstrap.RpcProviderBootStrap;
+import org.springframework.context.annotation.Import;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,6 +18,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Import({RpcInitBootStrap.class, RpcProviderBootStrap.class, RpcConsumerBootstrap.class})
 public @interface EnableRpc {
 
     /**
