@@ -2,9 +2,7 @@
 
 ## 项目介绍
 
-RzRPC是基于Java+Etcd+Vert.x+自定义协议实现的RPC框架，利用SPI动态拓展机制用户可自定义序列化器、负载均衡、重试、和容错策略等。
-
-通过引入Spring Boot Starter,通过注解和配置文件快速使用框架，像调用本地方法一样轻松调用远程服务。
+RzRPC是基于Java+Etcd+Vert.x+自定义协议实现的RPC框架，利用SPI动态拓展机制用户可自定义序列化器、负载均衡、重试、和容错策略等。通过引入Spring Boot Starter,通过注解和配置文件快速使用框架，像调用本地方法一样轻松调用远程服务。
 
 ## 组织架构
 
@@ -33,6 +31,10 @@ rz-rpc
 ##架构图
 
 ![image-20240401160054818](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/image-20240401160054818.png)
+
+## 整体调用链路![QQ图片20240401171852](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/QQ%E5%9B%BE%E7%89%8720240401171852.png)
+
+蓝色->consumer 黄色->rpc-core 粉色-> 注册中心 绿色->提供端
 
 ## 关于作者
 

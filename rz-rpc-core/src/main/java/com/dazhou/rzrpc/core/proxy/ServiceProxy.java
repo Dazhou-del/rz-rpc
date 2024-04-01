@@ -7,6 +7,7 @@ import com.dazhou.rzrpc.core.constant.RpcConstant;
 import com.dazhou.rzrpc.core.fault.retry.RetryStrategy;
 import com.dazhou.rzrpc.core.fault.retry.RetryStrategyFactory;
 import com.dazhou.rzrpc.core.fault.tolerant.TolerantStrategy;
+import com.dazhou.rzrpc.core.fault.tolerant.TolerantStrategyFactory;
 import com.dazhou.rzrpc.core.loadbalancer.LoadBalancer;
 import com.dazhou.rzrpc.core.loadbalancer.LoadBalancerFactory;
 import com.dazhou.rzrpc.core.model.RpcRequest;
@@ -77,7 +78,7 @@ public class ServiceProxy implements InvocationHandler {
             );
         } catch (Exception e) {
             //容错策略
-            TolerantStrategy tolerantStrategy = SpiLoader.getInstance(TolerantStrategy.class, rpcConfig.getTolerantStrategy());
+            TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
             rpcResponse = tolerantStrategy.doTolerant(null, e);
         }
         return rpcResponse.getData();
