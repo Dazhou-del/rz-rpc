@@ -32,7 +32,9 @@ rz-rpc
 
 ![image-20240401160054818](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/image-20240401160054818.png)
 
-## 整体调用链路![QQ图片20240401171852](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/QQ%E5%9B%BE%E7%89%8720240401171852.png)
+## 整体调用链路
+
+![QQ图片20240401180017](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/QQ%E5%9B%BE%E7%89%8720240401180017.png)
 
 蓝色->consumer 黄色->rpc-core 粉色-> 注册中心 绿色->提供端
 

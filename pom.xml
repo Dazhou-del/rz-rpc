@@ -14,6 +14,7 @@
         <module>example-provider</module>
         <module>rz-rpc-easy</module>
         <module>rz-rpc-core</module>
+        <module>rz-rpc-spring-boot-starter</module>
     </modules>
 
     <properties>
