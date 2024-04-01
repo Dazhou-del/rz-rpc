@@ -28,13 +28,27 @@ rz-rpc
 | kryo           | Java对象序列化框架                                           | https://github.com/EsotericSoftware/kryo                     |
 | hessian        | Java对象序列化框架                                           | http://hessian.caucho.com/                                   |
 
-##架构图
+## 架构图
 
 ![image-20240401160054818](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/image-20240401160054818.png)
 
 ## 整体调用链路![QQ图片20240401171852](https://tptptptpt.oss-cn-guangzhou.aliyuncs.com/picture/QQ%E5%9B%BE%E7%89%8720240401171852.png)
 
 蓝色->consumer 黄色->rpc-core 粉色-> 注册中心 绿色->提供端
+
+> 调用流程
+
+1. 消费者通过服务代理工厂创建代理对象。
+2. 通过代理对象调用具体的方法
+3. 代理对象会调用调用invoke方法。
+4. 在invoke方法中，构建请求参数。
+5. 根据注册中心工厂，获取具体的注册中心实现类，拉取全部的服务列表。
+6. 根据负载均衡工厂，获取具体的负载均衡实现类，根据设置的负载均衡方法获取具体的服务。
+7. 根据重试策略工厂，获取具体的重试策略实现类，选择几天的实现策略。
+8. 发起TCP请求，与服务端建立连接，构建自定义协议参数，对自定义协议进行编码转成Buffer，之后向服务端发送Buffer。
+9. 服务端需要对数据进行粘包半包处理，保证接收到数据是完整的，之后数据进行解码。通过发送过来的数据 反射调用提供者中真正的方法。获取结果，将结果编码然后响应。
+10. VertxTcpClient接收到响应后，对响应进行解码，返回数据。
+11. 在invoke中接收到VertxTcpClient类返回的结果后，将数据返回给消费端，这是消费端就获取到了调用真实接口的结果。
 
 ## 关于作者
 
