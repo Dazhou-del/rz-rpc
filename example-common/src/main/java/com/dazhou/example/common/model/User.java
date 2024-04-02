@@ -11,6 +11,16 @@ public class User implements Serializable {
 
     private String name;
 
+    int a;
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
     public String getName() {
         return name;
     }

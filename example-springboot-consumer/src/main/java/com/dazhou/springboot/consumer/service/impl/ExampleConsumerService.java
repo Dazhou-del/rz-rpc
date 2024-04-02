@@ -19,6 +19,7 @@ public class ExampleConsumerService {
     public void test(){
         User user = new User();
         user.setName("dazhou");
+        user.setA(22);
         User resultUser = userService.getUser(user);
         System.out.println("你的名字是:"+resultUser.getName());
     }
