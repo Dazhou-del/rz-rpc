@@ -31,6 +31,7 @@ public class RpcConsumerBootstrap implements BeanPostProcessor {
                 field.setAccessible(true);
                 Object proxyObject = ServiceProxyFactory.getProxy(interfaceClass);
                 try {
+                    //方法用于将此Field对象在指定对象参数上表示的字段的值设置为作为参数传递的指定新值。
                     field.set(bean, proxyObject);
                     field.setAccessible(false);
                 } catch (IllegalAccessException e) {

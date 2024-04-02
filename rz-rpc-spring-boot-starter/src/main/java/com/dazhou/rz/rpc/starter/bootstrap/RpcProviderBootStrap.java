@@ -28,7 +28,7 @@ public class RpcProviderBootStrap implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
         RpcService rpcService = beanClass.getAnnotation(RpcService.class);
-        if (rpcService==null){
+        if (rpcService!=null){
             //需要注册服务
             //1.获取服务的基本信息
             Class<?> interfaceClass  = rpcService.interfaceClass();

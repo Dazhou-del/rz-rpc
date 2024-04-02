@@ -11,12 +11,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 服务消费者（用于注入服务）
+ * 服务消费者（用于消费）
  *
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-04-01 20:54
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RpcReference {
 
