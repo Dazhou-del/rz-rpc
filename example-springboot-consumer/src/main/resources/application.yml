@@ -1,0 +1,13 @@
+spring:
+  mail:
+    port: 2350
+rpc:
+  name: da-zhou
+  version: 1.0
+  mock: false
+  serverHost: localhost
+  registryConfig:
+    address: http://localhost:2380
+    loadBalancer: random
+  retryStrategy: fixedInterval
+
