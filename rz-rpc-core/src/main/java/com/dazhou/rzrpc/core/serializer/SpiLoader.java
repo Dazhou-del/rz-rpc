@@ -3,6 +3,7 @@ package com.dazhou.rzrpc.core.serializer;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import com.dazhou.rzrpc.core.exception.RpcException;
+import com.dazhou.rzrpc.core.exception.RpcExceptionConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -138,7 +139,7 @@ public class SpiLoader {
                         }
                     }
                 } catch (Exception e) {
-                    log.error("spi resource load error",);
+                    log.error("SpiLoader.load:{}",new RpcException(RpcExceptionConstant.consumerErrorCode,"加载失败"));
 
                 }
             }
