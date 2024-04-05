@@ -1,26 +1,25 @@
 package com.dazhou.rzrpc.core.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 通用异常
+ *
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-04-04 23:05
  */
-@Getter
-public enum RpcException {
-
-    ok(200,"成功"),
-    error(400,"失败");
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RpcException {
 
 
-    private final int value;
+    private int errorCode;
 
-    private final String text;
+    private String errorMessage;
 
-    RpcException(int value,String text){
-        this.text=text;
-        this.value=value;
-    }
+
 }

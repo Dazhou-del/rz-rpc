@@ -2,6 +2,7 @@ package com.dazhou.rzrpc.core.serializer;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
+import com.dazhou.rzrpc.core.exception.RpcException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -115,9 +116,9 @@ public class SpiLoader {
         for (String scanDir : SCAN_DIRS) {
             String loadClassName = loadClass.getName();
             List<URL> resources = ResourceUtil.getResources(scanDir + loadClass.getName());
-//            if (resources.size()==0){
-//                continue;
-//            }
+            if (resources.size()==0){
+                continue;
+            }
             // 读取每个资源文件
             for (URL resource : resources) {
                 try {
@@ -137,7 +138,8 @@ public class SpiLoader {
                         }
                     }
                 } catch (Exception e) {
-                    log.error("spi resource load error", e);
+                    log.error("spi resource load error",);
+
                 }
             }
         }

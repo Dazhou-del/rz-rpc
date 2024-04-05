@@ -3,12 +3,15 @@ package com.dazhou.rzrpc.core.bootstrap;
 import com.dazhou.rzrpc.core.RpcApplication;
 import com.dazhou.rzrpc.core.config.RpcConfig;
 import com.dazhou.rzrpc.core.constant.RpcConstant;
+import com.dazhou.rzrpc.core.exception.RpcException;
+import com.dazhou.rzrpc.core.exception.RpcExceptionConstant;
 import com.dazhou.rzrpc.core.model.ServiceMetaInfo;
 import com.dazhou.rzrpc.core.model.ServiceRegisterInfo;
 import com.dazhou.rzrpc.core.registry.LocalRegistry;
 import com.dazhou.rzrpc.core.registry.Registry;
 import com.dazhou.rzrpc.core.registry.RegistryFactory;
 import com.dazhou.rzrpc.core.service.tcp.VertxTcpServer;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
  * @author <a href="https://github.com/Dazhou-del">Dazhou</a>
  * @create 2024-04-01 20:19
  */
+@Slf4j
 public class ProviderBootstrap {
 
 
@@ -43,7 +47,7 @@ public class ProviderBootstrap {
             try {
                 registry.register(serviceMetaInfo);
             } catch (Exception e) {
-                throw new RuntimeException(serviceName + " 服务注册失败", e);
+                log.info("ProviderBootstrap.init:{}",new RpcException(RpcExceptionConstant.registryErrorCode,"注册失败"));
             }
         }
 
